@@ -3,11 +3,6 @@ import axios from "axios";
 import { NoticiasItem } from "./NoticiasItem";
 
 export const HomePage = () => {
-  // return (
-  //   <div className="homePage">
-  //     <h1>HomePage</h1>
-  //   </div>
-  // );
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -21,7 +16,7 @@ export const HomePage = () => {
   }, []);
 
   return (
-    <div>
+    <div className="homePage">
       {articles.map((article, index) => {
         return (
           <NoticiasItem
