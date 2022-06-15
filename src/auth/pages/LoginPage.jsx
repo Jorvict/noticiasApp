@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Identity from "@arc-publishing/sdk-identity";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 
 export const LoginPage = () => {
   const urlBase = "https://api-sandbox.elcomercio.pe";
   const [isLogged, setIsLogged] = useState(false);
+  const [error, setError] = useState(false);
   const [dataLogin, setDataLogin] = useState({ emailLogin: "", passLogin: "" });
 
   useEffect(() => {
@@ -27,9 +28,11 @@ export const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { emailLogin, passLogin } = dataLogin;
-    console.log(dataLogin);
-    Identity.login(emailLogin, passLogin).then((rest) => setIsLogged(true));
-    console.log(isLogged);
+    Identity.login(emailLogin, passLogin)
+      .then((rest) => setIsLogged(true))
+      .catch((err) => {
+        setError("Correo o contraseña inválidos");
+      });
   };
 
   return (
@@ -37,32 +40,33 @@ export const LoginPage = () => {
       <div className="login-container">
         <div className="login-info-container">
           <h2 className="title">Inicia sesión</h2>
-          {isLogged && <p>Usuario o contraseña incorrecta</p>}
           <form className="form">
+            {error && <p className="alert alert-danger inputLogin">{error}</p>}
             <input
               className="form-control py-3 my-3 inputLogin"
-              type="text"
+              type="email"
               placeholder="Correo electronico"
-              autoFocus
-              required
               name="emailLogin"
-              autoComplete="new-off"
               onChange={handleInput}
+              required
+              autoFocus
+              autoComplete="new-off"
             />
+            <div className="invalid-feedback">Please choose a username.</div>
             <input
               className="form-control py-3 my-3 inputLogin"
               type="password"
               name="passLogin"
               placeholder="*********"
-              required
               onChange={handleInput}
+              required
             />
             <p className="parrafo">
               ¿Olvidaste tu contraseña?{" "}
               <span className="span">Presiona aquí</span>
             </p>
             <button
-              // type="submit"
+              type="submit"
               className="btn py-3 my-3"
               onClick={handleSubmit}
             >
@@ -70,7 +74,9 @@ export const LoginPage = () => {
             </button>
             <p className="parrafo">
               ¿Aún no tienes una cuenta?{" "}
-              <span className="span">Registrate</span>
+              <Link to={"/register"}>
+                <span className="span">Registrate</span>
+              </Link>
             </p>
           </form>
         </div>
