@@ -37,6 +37,7 @@ export const LoginPage = () => {
       <div className="login-container">
         <div className="login-info-container">
           <h2 className="title">Inicia sesión</h2>
+          {isLogged && <p>Usuario o contraseña incorrecta</p>}
           <form className="form">
             <input
               className="form-control py-3 my-3 inputLogin"
