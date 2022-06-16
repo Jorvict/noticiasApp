@@ -45,8 +45,8 @@ export const LoginPage = () => {
             <input
               className="form-control py-3 my-3 inputLogin"
               type="email"
-              placeholder="Correo electronico"
               name="emailLogin"
+              placeholder="Correo electronico"
               onChange={handleInput}
               required
               autoFocus

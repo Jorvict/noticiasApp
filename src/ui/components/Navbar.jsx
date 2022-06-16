@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Identity from "@arc-publishing/sdk-identity";
 
 export const Navbar = () => {
-  const [dataRegistro, setDataRegistro] = useState({});
+  const [style, setStyle] = useState(false);
   const navigate = useNavigate();
+
+  const handleStyle = () => {
+    setStyle(!style);
+  };
 
   const handleLogin = () => {
     navigate("/login");
@@ -21,7 +24,10 @@ export const Navbar = () => {
           <img src="./assets/img/logo.png" alt="logo" />
         </a>
       </div>
-      <nav>
+      <div className={`menu ${style ? "open" : ""}`} onClick={handleStyle}>
+        <span></span>
+      </div>
+      <nav className={`aside ${style ? "toggle" : ""}`}>
         <ul className="nav">
           <li>
             <a className="btn" onClick={handleLogin}>
